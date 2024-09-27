@@ -40,8 +40,7 @@
     </div>
     <button class="btn" data-js="reset">戻る</button>
   `
-  $(function() {
-    $('#pokemon_search').on('click', function() {
+  function searchPokemon() {
       let pokemonId = Math.floor(Math.random() * 151) + 1;
 
       $.ajax({
@@ -56,9 +55,20 @@
       }).fail(function(err) {
         alert('ポケモンの取得に失敗しました');
     });
+  }
 
-    $(document).on('click', '#catch', function () {
-      let catchSuccess = Math.random() < 0.5;
+    function bindSearchButton() {
+      $('#pokemon_search').on('click', function() {
+        searchPokemon();
+      });
+    }
+
+    $(function() {
+      bindSearchButton();
+
+
+      $(document).on('click', '#catch', function () {
+        let catchSuccess = Math.random() < 0.5;
         if (catchSuccess) {
           $('.wrapper').html(doneHtml);
         } else {
@@ -67,7 +77,7 @@
       });
     $(document).on('click', '[data-js="reset"]', function () {
       $('.wrapper').html('<button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>');
-      });
+        bindSearchButton();
   });
 });
   </script>

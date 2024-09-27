@@ -85,24 +85,18 @@
     <script src="../../common/js/jquery.js"></script>
     <script>
 $(function() {
-    function filterList() {
-        var selectedValue = $('.select').val();
-        $('.list li').hide();
-
-        if (selectedValue === 'all') {
-            $('.list li').show();
-        } else {
-            $('.list li').each(function() {
-                if ($(this).data('category-type') === selectedValue) {
-                    $(this).show();
-                }
-            });
-        }
+  function filterList() {
+        var selectedValue = $('.select').val();  // セレクトボックスのvalueを取得
+        $('.list li').each(function(index, element) {  // li要素をループ処理
+            var categoryType = $(element).data('category-type');  // liのdata-category-typeを取得
+            if (selectedValue === 'all' || selectedValue === categoryType) {
+                $(element).show();  // 一致する要素を表示
+            } else {
+                $(element).hide();  // 一致しない要素を隠す
+            }
+        });
     }
-
-    $('.select').on( "change", function() {
-        filterList();
-    });
+    $('.select').change(filterList);
 });
 
       // 今回やるのはフィルタリング機能です。
